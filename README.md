@@ -1,3 +1,9 @@
+# Video example showing repository poc
+https://user-images.githubusercontent.com/11558773/175799459-85fa0797-4195-4ce9-89bf-f2779d31c580.mov
+
+
+# REACT CRA README BELOW
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
