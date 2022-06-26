@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useCallback, useEffect, useRef, useState } from "react";
+import "./App.css";
 
 function App() {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [isPictureInPicture, setIsPictureInPicture] = useState(false);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.onenterpictureinpicture = function (event) {
+        console.log('enter', this, event);
+        setIsPictureInPicture(true);
+      };
+
+      ref.current.onleavepictureinpicture = function (event) {
+        console.log('leave', this, event);
+        setIsPictureInPicture(false);
+      };
+    }
+  }, [ref]);
+
+  const handlePictureInPicture = useCallback(() => {
+    ref.current?.requestPictureInPicture();
+  }, [ref]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>ola</p>
+      <video
+        ref={ref}
+        style={{ width: "500px" }}
+        src="/video-example.mov"
+        controls
+      />
+      <br />
+      <button onClick={handlePictureInPicture}>picture in picture</button>
+      {isPictureInPicture && <button onClick={() => document.exitPictureInPicture()}>close picture in picture</button>}
     </div>
   );
 }
